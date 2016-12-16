@@ -16,6 +16,10 @@ export class RecordService {
     this.diceHistory.pop();
   }
 
+  public getCounter(): { [key: number]: number } {
+    return this.changeArrayToHash();
+  }
+
   public getProbability(): { [key: number]: number } {
     var hashHistory = this.changeArrayToHash();
     console.log(hashHistory);
