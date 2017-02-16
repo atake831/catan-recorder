@@ -9,15 +9,11 @@
 
 <ion-content>
   <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-      <ion-icon [name]="item.icon" item-left></ion-icon>
-      {{item.title}}
-      <div class="item-note" item-right>
-        {{item.note}}
+    <button ion-item *ngFor="let record of records" (click)="showDetail($event, record)">
+      {{ record.startTime | date:'yyyy/MM/dd' }}
+      <div item-right>
+        {{ record.name }}
       </div>
     </button>
   </ion-list>
-  <div *ngIf="selectedItem" padding>
-    You navigated here from <b>{{selectedItem.title}}</b>
-  </div>
 </ion-content>

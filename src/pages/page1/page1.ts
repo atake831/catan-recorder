@@ -1,16 +1,18 @@
 import { Component } from '@angular/core';
 import { RecordService } from '../../app/record.service';
+import { HistoryService } from '../../app/history.service';
+import { StorageService } from '../../app/storage.service';
 
-import { NavController } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
 
 @Component({
   selector: 'page-page1',
-  providers: [RecordService],
+  providers: [RecordService, HistoryService, StorageService],
   templateUrl: 'page1.html'
 })
 export class Page1 {
   diceCounter: { [key: number]: number };
-  totalTurns: number;
+  totalTurns: number = 0;
   isAverageView: boolean;
 
   public barChartOptions:any = {
@@ -35,12 +37,13 @@ export class Page1 {
     { data: [], label: 'Count' } 
   ];
 
-  constructor(public navCtrl: NavController, private recordService: RecordService) {
+  constructor(public alertCtrl: AlertController, public navCtrl: NavController, private recordService: RecordService, private historyService: HistoryService) {
     this.update();
     this.viewCount();
   }
 
   select(selectedNumber: number) {
+    if ( this.totalTurns === 0 ) this.recordService.start();
     this.recordService.push(selectedNumber);
     this.update();
   }
@@ -60,6 +63,39 @@ export class Page1 {
     this.isAverageView = true;
     this.changeBarChartData("Average");
     this.update();
+  }
+
+  save() {
+    let prompt = this.alertCtrl.create({
+      title: 'レコードを保存します',
+      message: "レコードのタイトルを記入して保存してください",
+      inputs: [
+        {
+          name: 'title',
+          placeholder: 'タイトル'
+        },
+      ],
+      buttons: [
+        {
+          text: 'キャンセル',
+          handler: data => {
+          }
+        },
+        {
+          text: '保存',
+          handler: data => {
+            this.saveRecord(data.title);
+          }
+        }
+      ]
+    });
+    prompt.present();
+  }
+
+  private saveRecord(name: string) {
+    this.recordService.end();
+    this.recordService.setRecordName(name);
+    this.historyService.addHistory(this.recordService.getRecord());
   }
 
   private changeBarChartData(labelName: string) {

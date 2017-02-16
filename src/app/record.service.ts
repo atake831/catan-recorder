@@ -1,19 +1,50 @@
 import { Injectable } from '@angular/core';
 
+export interface Record {
+  diceHistory: number[]; 
+  name: string;
+  startTime: Date;
+  endTime: Date;
+}
+
 @Injectable()
 export class RecordService {
-  private diceHistory: number[]; 
+  private record: Record = {
+    diceHistory: [],
+    name: '',
+    startTime: null,
+    endTime: null,
+  }
 
   constructor() {
-    this.diceHistory = [];
+  }
+
+  public start() {
+    this.record.startTime = new Date();
+  }
+
+  public end() {
+    this.record.endTime = new Date();
+  }
+
+  public getRecord() {
+    return this.record;
+  }
+
+  public setRecord(record: Record) {
+    this.record = record;
   }
 
   public push(v: number) {
-    this.diceHistory.push(v);
+    this.record.diceHistory.push(v);
   }
 
   public historyBack() {
-    this.diceHistory.pop();
+    this.record.diceHistory.pop();
+  }
+
+  public setRecordName(name: string) {
+    this.record.name = name;
   }
 
   public getCounter(): { [key: number]: number } {
@@ -22,25 +53,22 @@ export class RecordService {
 
   public getProbability(): { [key: number]: number } {
     var hashHistory = this.changeArrayToHash();
-    console.log(hashHistory);
 
     for ( var key in hashHistory ) {
-      hashHistory[key] = hashHistory[key] / this.diceHistory.length * 100;
+      hashHistory[key] = hashHistory[key] / this.record.diceHistory.length * 100;
     }
-
-    console.log(hashHistory);
 
     return hashHistory;
   }
 
   public getTotalTurns(): number {
-    return this.diceHistory.length;
+    return this.record.diceHistory.length;
   }
 
   private changeArrayToHash(): { [key: number]: number } {
     var hashHistory: { [key: number]: number } = {};
 
-    this.diceHistory.forEach( (n) => {
+    this.record.diceHistory.forEach( (n) => {
       hashHistory[n] ? hashHistory[n]++ : hashHistory[n] = 1;
     });
 
