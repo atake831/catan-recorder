@@ -5,6 +5,8 @@ import { StorageService } from '../../app/storage.service';
 
 import { NavController } from 'ionic-angular';
 
+import {Deploy} from '@ionic/cloud-angular';
+
 @Component({
   selector: 'page-page2',
   providers: [HistoryService, StorageService],
@@ -14,8 +16,16 @@ export class Page2 {
   selectedItem: any;
   records: Record[];
 
-  constructor(public navCtrl: NavController, private historyService: HistoryService) {
+  constructor(public deploy: Deploy, public navCtrl: NavController, private historyService: HistoryService) {
     this.records = historyService.getHistories();
+
+    this.deploy.check().then((snapshotAvailable: boolean) => {
+      if ( snapshotAvailable ) {
+        this.deploy.download().then(() => {
+          return this.deploy.extract();
+        });
+      }
+    });
   }
 
   showDetail(event, record: Record) {

@@ -7,6 +7,15 @@ import { Page2 } from '../pages/page2/page2';
 import '../../node_modules/chart.js/dist/Chart.bundle.min.js';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 
+// for ionic cloud setup
+import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
+const cloudSettings: CloudSettings = {
+  'core': {
+    'app_id': '30badd73'
+  }
+};
+
+
 @NgModule({
   declarations: [
     MyApp,
@@ -15,6 +24,7 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
   ],
   imports: [
     IonicModule.forRoot(MyApp),
+    CloudModule.forRoot(cloudSettings),
     ChartsModule
   ],
   bootstrap: [IonicApp],
