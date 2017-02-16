@@ -11,6 +11,7 @@ import { NavController } from 'ionic-angular';
 export class Page1 {
   diceCounter: { [key: number]: number };
   totalTurns: number;
+  isAverageView: boolean;
 
   public barChartOptions:any = {
     scaleShowVerticalLines: false,
@@ -36,10 +37,10 @@ export class Page1 {
 
   constructor(public navCtrl: NavController, private recordService: RecordService) {
     this.update();
+    this.viewCount();
   }
 
   select(selectedNumber: number) {
-    console.log(selectedNumber);
     this.recordService.push(selectedNumber);
     this.update();
   }
@@ -47,6 +48,22 @@ export class Page1 {
   back() {
     this.recordService.historyBack();
     this.update();
+  }
+
+  viewCount() {
+    this.isAverageView = false;
+    this.changeBarChartData("Count");
+    this.update();
+  }
+
+  viewAverage() {
+    this.isAverageView = true;
+    this.changeBarChartData("Average");
+    this.update();
+  }
+
+  private changeBarChartData(labelName: string) {
+    this.barChartData[0]["label"] = labelName;
   }
 
   private update() {
@@ -57,9 +74,14 @@ export class Page1 {
 
   private setBarChartData() {
     var data = []
+
     for ( var index in this.barChartLabels ) {
       data[index] = this.diceCounter[+ this.barChartLabels[index]] || 0;
+      if ( this.isAverageView ) {
+        data[index] = data[index] / this.totalTurns * 100;
+      }
     }
+
     // http://valor-software.com/ng2-charts/
     // 一度cloneしないと表示がupdateされない
     let clone = JSON.parse(JSON.stringify(this.barChartData));

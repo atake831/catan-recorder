@@ -62,6 +62,9 @@
 
   <h3>Total Turns : {{ totalTurns }}</h3>
 
+  <button ion-button color="light" (click)="viewCount()">Count</button>
+  <button ion-button color="light" (click)="viewAverage()">Average</button>
+
   <section padding>
 
     <canvas baseChart
@@ -73,5 +76,6 @@
             >
     </canvas>
   </section>
+
 
 </ion-content>
