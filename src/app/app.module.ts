@@ -3,11 +3,12 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { Page1 } from '../pages/page1/page1';
 import { Page2 } from '../pages/page2/page2';
+import { RecordDetailPage } from '../pages/record-detail/record-detail';
 
 import '../../node_modules/chart.js/dist/Chart.bundle.min.js';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 
-// for ionic cloud setup
+// for setup ionic cloud
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 const cloudSettings: CloudSettings = {
   'core': {
@@ -20,7 +21,8 @@ const cloudSettings: CloudSettings = {
   declarations: [
     MyApp,
     Page1,
-    Page2
+    Page2,
+    RecordDetailPage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -31,7 +33,8 @@ const cloudSettings: CloudSettings = {
   entryComponents: [
     MyApp,
     Page1,
-    Page2
+    Page2,
+    RecordDetailPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })

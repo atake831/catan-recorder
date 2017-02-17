@@ -5,8 +5,6 @@ import { StorageService } from '../../app/storage.service';
 
 import { NavController, AlertController } from 'ionic-angular';
 
-import {Deploy} from '@ionic/cloud-angular';
-
 @Component({
   selector: 'page-page1',
   providers: [RecordService, HistoryService, StorageService],
@@ -39,17 +37,9 @@ export class Page1 {
     { data: [], label: 'Count' } 
   ];
 
-  constructor(public deploy: Deploy, public alertCtrl: AlertController, public navCtrl: NavController, private recordService: RecordService, private historyService: HistoryService) {
+  constructor(public alertCtrl: AlertController, public navCtrl: NavController, private recordService: RecordService, private historyService: HistoryService) {
     this.update();
     this.viewCount();
-
-    this.deploy.check().then((snapshotAvailable: boolean) => {
-      if ( snapshotAvailable ) {
-        this.deploy.download().then(() => {
-          return this.deploy.extract();
-        });
-      }
-    });
   }
 
   select(selectedNumber: number) {

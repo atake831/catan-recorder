@@ -5,6 +5,8 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 import { Page1 } from '../pages/page1/page1';
 import { Page2 } from '../pages/page2/page2';
 
+import { Deploy } from '@ionic/cloud-angular';
+
 
 @Component({
   templateUrl: 'app.html'
@@ -16,7 +18,7 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform) {
+  constructor(public platform: Platform, public deploy: Deploy, ) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -25,6 +27,15 @@ export class MyApp {
       { title: 'Page Two', component: Page2 }
     ];
 
+    if ( platform.is('cordova') ) {
+      this.deploy.check().then((snapshotAvailable: boolean) => {
+        if ( snapshotAvailable ) {
+          this.deploy.download().then(() => {
+            return this.deploy.extract();
+          });
+        }
+      });
+    }
   }
 
   initializeApp() {
