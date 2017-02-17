@@ -8,8 +8,9 @@ export class HistoryService {
   private historyKey = 'catanRecorderHistories';
 
   constructor(private storageService: StorageService) {
-    this.histories = storageService.getArray(this.historyKey)
-                                   .map(item => item as Record);
+    this.histories = storageService.getArray(this.historyKey).map((item) => {
+      return new Record(item.diceHistory, item.name, item.startTime, item.endTime);
+    });
   }
 
   public getHistories() {

@@ -7,11 +7,13 @@ import { NavController, AlertController } from 'ionic-angular';
 
 @Component({
   selector: 'page-page1',
-  providers: [Record, HistoryService, StorageService],
+  providers: [HistoryService, StorageService],
   templateUrl: 'page1.html'
 })
 export class Page1 {
-  constructor(public alertCtrl: AlertController, public navCtrl: NavController, private historyService: HistoryService, public record: Record) {
+  record: Record;
+  constructor(public alertCtrl: AlertController, public navCtrl: NavController, private historyService: HistoryService) {
+    this.record = new Record();
   }
 
   select(selectedNumber: number) {

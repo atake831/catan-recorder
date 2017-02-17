@@ -7,8 +7,11 @@ export class Record {
   startTime: Date;
   endTime: Date;
 
-  constructor() {
-    this.diceHistory = [];
+  constructor(diceHistory: number[] = [], name: string = '', startTime: Date = null, endTime: Date = null) {
+    this.diceHistory = diceHistory;
+    this.name = name;
+    this.startTime = startTime;
+    this.endTime = endTime;
   }
 
   public getTotalTurns(): number {
