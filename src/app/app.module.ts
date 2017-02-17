@@ -1,10 +1,16 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+
+// pages
 import { MyApp } from './app.component';
 import { Page1 } from '../pages/page1/page1';
 import { Page2 } from '../pages/page2/page2';
 import { RecordDetailPage } from '../pages/record-detail/record-detail';
 
+// components
+import { ChartComponent } from '../components/chart/chart';
+
+// modules
 import '../../node_modules/chart.js/dist/Chart.bundle.min.js';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 
@@ -16,13 +22,15 @@ const cloudSettings: CloudSettings = {
   }
 };
 
-
 @NgModule({
   declarations: [
+    // pages
     MyApp,
     Page1,
     Page2,
-    RecordDetailPage
+    RecordDetailPage,
+    // components
+    ChartComponent
   ],
   imports: [
     IonicModule.forRoot(MyApp),

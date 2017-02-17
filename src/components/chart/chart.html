@@ -1,8 +1,14 @@
-<!--
-  Generated template for the Chart component.
+<button ion-button color="light" (click)="viewCount()">Count</button>
+<button ion-button color="light" (click)="viewAverage()">Average</button>
 
-  See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
-  for more info on Angular 2 Components.
--->
+<section padding>
+  <canvas baseChart
+          [datasets]="barChartData"
+          [labels]="barChartLabels"
+          [options]="barChartOptions"
+          [legend]="barChartLegend"
+          [chartType]="barChartType"
+          >
+  </canvas>
+</section>
 
-{{text}}

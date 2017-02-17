@@ -61,22 +61,8 @@
     </ion-row>
   </ion-grid>
 
-  <h3>Total Turns : {{ totalTurns }}</h3>
+  <h3>Total Turns : {{ record.getTotalTurns() }}</h3>
 
-  <button ion-button color="light" (click)="viewCount()">Count</button>
-  <button ion-button color="light" (click)="viewAverage()">Average</button>
-
-  <section padding>
-
-    <canvas baseChart
-            [datasets]="barChartData"
-            [labels]="barChartLabels"
-            [options]="barChartOptions"
-            [legend]="barChartLegend"
-            [chartType]="barChartType"
-            >
-    </canvas>
-  </section>
-
+  <chart [record]="record"></chart>
 
 </ion-content>

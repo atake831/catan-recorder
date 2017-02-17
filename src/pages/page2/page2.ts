@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RecordService, Record } from '../../app/record.service';
+import { Record } from '../../app/record.service';
 import { HistoryService } from '../../app/history.service';
 import { StorageService } from '../../app/storage.service';
 

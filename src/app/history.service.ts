@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { StorageService } from './storage.service';
-import { RecordService, Record } from './record.service';
+import { Record } from './record.service';
 
 @Injectable()
 export class HistoryService {

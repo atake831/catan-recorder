@@ -1,78 +1,58 @@
 import { Injectable } from '@angular/core';
 
-export interface Record {
+@Injectable()
+export class Record {
   diceHistory: number[]; 
   name: string;
   startTime: Date;
   endTime: Date;
-}
-
-@Injectable()
-export class RecordService {
-  private record: Record = {
-    diceHistory: [],
-    name: '',
-    startTime: null,
-    endTime: null,
-  }
 
   constructor() {
+    this.diceHistory = [];
   }
 
-  public start() {
-    this.record.startTime = new Date();
+  public getTotalTurns(): number {
+    return this.diceHistory.length;
   }
 
-  public end() {
-    this.record.endTime = new Date();
-  }
+  public getCountData(): { [key: number]: number } {
+    var hashHistory: { [key: number]: number } = {};
 
-  public getRecord() {
-    return this.record;
-  }
+    this.diceHistory.forEach( (n) => {
+      hashHistory[n] ? hashHistory[n]++ : hashHistory[n] = 1;
+    });
 
-  public setRecord(record: Record) {
-    this.record = record;
+    return hashHistory;
   }
-
-  public push(v: number) {
-    this.record.diceHistory.push(v);
-  }
-
-  public historyBack() {
-    this.record.diceHistory.pop();
-  }
-
-  public setRecordName(name: string) {
-    this.record.name = name;
-  }
-
-  public getCounter(): { [key: number]: number } {
-    return this.changeArrayToHash();
-  }
-
-  public getProbability(): { [key: number]: number } {
-    var hashHistory = this.changeArrayToHash();
+  
+  public getProbabilityData(): { [key: number]: number } {
+    var hashHistory = this.getCountData();
 
     for ( var key in hashHistory ) {
-      hashHistory[key] = hashHistory[key] / this.record.diceHistory.length * 100;
+      hashHistory[key] = hashHistory[key] / this.getTotalTurns() * 100;
     }
 
     return hashHistory;
   }
 
-  public getTotalTurns(): number {
-    return this.record.diceHistory.length;
+  public start() {
+    this.startTime = new Date();
   }
 
-  private changeArrayToHash(): { [key: number]: number } {
-    var hashHistory: { [key: number]: number } = {};
+  public end() {
+    this.endTime = new Date();
+  }
 
-    this.record.diceHistory.forEach( (n) => {
-      hashHistory[n] ? hashHistory[n]++ : hashHistory[n] = 1;
-    });
+  public push(v: number) {
+    this.diceHistory.push(v);
+  }
 
-    return hashHistory;
+  public historyBack() {
+    this.diceHistory.pop();
+  }
+
+  public setRecordName(name: string) {
+    this.name = name;
   }
 
 }
