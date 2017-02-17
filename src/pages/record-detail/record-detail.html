@@ -8,13 +8,14 @@
 
 
 <ion-content padding>
-  <h3>{{ record.name }}</h3>
+  <h2>{{ record.name }}</h2>
   <p>
     {{ record.startTime | date:'yyyy/MM/dd HH:mm' }}
      〜 
     {{ record.endTime | date:'yyyy/MM/dd HH:mm' }}
   </p>
-  <br />
 
+  <h3>Total Turns : {{ record.getTotalTurns() }}</h3>
   <chart [record]="record"></chart>
+
 </ion-content>
